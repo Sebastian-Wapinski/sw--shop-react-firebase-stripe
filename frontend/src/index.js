@@ -8,18 +8,20 @@ import { ThemeProvider } from 'styled-components'
 import theme from './components/style/theme'
 import ResetStyle from './components/style/Reset'
 
-import { Provider } from 'react-redux'
-import { store } from './store'
+// import {Elements} from '@stripe/react-stripe-js'
+// import {loadStripe} from 'stripe'
+
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      {/* <Elements stripe={stripePromise}> */}
         <ResetStyle />
         <App />
-      </ThemeProvider>
-    </Provider>
+      {/* </Elements> */}
+    </ThemeProvider>
   </React.StrictMode>
 )
 
