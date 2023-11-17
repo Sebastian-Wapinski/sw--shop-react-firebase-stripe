@@ -18,8 +18,8 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       {/* <Elements stripe={stripePromise}> */}
-        <ResetStyle />
-        <App />
+      <ResetStyle />
+      <App />
       {/* </Elements> */}
     </ThemeProvider>
   </React.StrictMode>
