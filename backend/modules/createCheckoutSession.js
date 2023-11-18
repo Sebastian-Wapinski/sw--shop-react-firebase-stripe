@@ -63,7 +63,7 @@ async function createCheckoutSession(req, res) {
     }
   })
 
-  createUnpaidOrder(lineItems, uniqueId)
+  await createUnpaidOrder(lineItems, uniqueId)
 
   res.json({ url: session.url })
 }

@@ -1,12 +1,8 @@
 const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
-const setRealtimeDatabase = require('./modules/setRealtimeDatabase')
-
-const fulfillOrder = (lineItems) => {
-  console.log('Fulfilling order')
-}
+const setRealtimeDatabase = require('./setRealtimeDatabase')
+const sendEmail = require('./sendEmail')
 
 const createOrder = (session) => {
-  console.log('Creating order', session)
   const {
     id,
     amount_total,
@@ -52,18 +48,22 @@ async function webhook(req, res) {
       const session = event.data.object
       createOrder(session)
 
+      if (session.payment_method_options.customer_balance.funding_type === 'bank_transfer') {
+        const email = session.customer_details.email
+        // sendEmail(email, 'Payment Bank Transfer Method', `Please transfer the money to the following bank details: ${session.url}`)
+      }
+
       if (session.payment_status === 'paid') {
-        fulfillOrder(session)
+        const email = session.customer_details.email
+        // sendEmail(email, 'Payment Succeed', `Your order has been received and is now being processed. Payment status: ${session.payment_status}`)
       }
       break
     }
 
     case 'charge.failed': {
       const session = event.data.object
-      // console.log('failed obj', session);
       const email = session.billing_details.email
-      // console.log('email', email);
-      await emailCustomerAboutFailedPayment(email)
+      // sendEmail(email, 'Payment Decline', 'Sorry, but your payment was declined. Please try again.')
       break
     }
 

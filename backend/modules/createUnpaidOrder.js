@@ -6,10 +6,8 @@ async function createUnpaidOrder(lineItems, uniqueId) {
   try {
     await db.ref(`orders/${uniqueId}`).set({
       lineItems: lineItems,
-      userId: uniqueId,
       paymentStatus: 'pending'
     });
-    console.log('pending');
   } catch (error) {
     console.error('pending err', error);
   }
