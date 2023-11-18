@@ -1,4 +1,4 @@
-const dbFn = require('../firebaseRealtimeDatabaseInit');
+const dbFn = require('./firebaseRealtimeDatabaseInit');
 
 async function getRealtimeDatabase(additionalPath) {
   const db = dbFn()

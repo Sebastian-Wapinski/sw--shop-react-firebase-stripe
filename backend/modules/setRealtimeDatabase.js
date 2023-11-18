@@ -1,4 +1,4 @@
-const dbFn = require('../firebaseRealtimeDatabaseInit');
+const dbFn = require('./firebaseRealtimeDatabaseInit');
 const getRealtimeDatabase = require('./getRealtimeDatabase');
 
 async function setRealtimeDatabase(paymentData) {
