@@ -39,7 +39,6 @@ async function webhook(req, res) {
   try {
     event = stripe.webhooks.constructEvent(payload, sig, process.env.ENDPOINT_SECRET)
   } catch (err) {
-    console.log(err, 'Error');
     return res.status(400).send(`Webhook Error: ${err.message}`)
   }
 
@@ -47,15 +46,14 @@ async function webhook(req, res) {
     case 'checkout.session.completed': {
       const session = event.data.object
       createOrder(session)
+      const email = session.customer_details.email
 
       if (session.payment_method_options.customer_balance.funding_type === 'bank_transfer') {
-        const email = session.customer_details.email
-        // sendEmail(email, 'Payment Bank Transfer Method', `Please transfer the money to the following bank details: ${session.url}`)
+        sendEmail(email, 'Payment Bank Transfer Method', `Please transfer the money to the following bank details: ${session.url}`)
       }
 
       if (session.payment_status === 'paid') {
-        const email = session.customer_details.email
-        // sendEmail(email, 'Payment Succeed', `Your order has been received and is now being processed. Payment status: ${session.payment_status}`)
+        sendEmail(email, 'Payment Succeed', `Your order has been received and is now being processed. Payment status: ${session.payment_status}`)
       }
       break
     }
@@ -63,7 +61,7 @@ async function webhook(req, res) {
     case 'charge.failed': {
       const session = event.data.object
       const email = session.billing_details.email
-      // sendEmail(email, 'Payment Decline', 'Sorry, but your payment was declined. Please try again.')
+      sendEmail(email, 'Payment Decline', 'Sorry, but your payment was declined. Please try again.')
       break
     }
 

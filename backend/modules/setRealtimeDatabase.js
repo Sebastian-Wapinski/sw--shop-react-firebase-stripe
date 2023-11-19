@@ -30,7 +30,6 @@ async function setRealtimeDatabase(paymentData) {
     customFields,
     created
     });
-    console.log('setRealtimeDatabase');
   } catch (error) {
     console.error('setRealtimeDatabase err', error);
   }
