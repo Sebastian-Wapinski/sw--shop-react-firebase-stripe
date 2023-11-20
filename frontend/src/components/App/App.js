@@ -5,7 +5,6 @@ import { StyledApp } from './App.styled'
 export const App = () => {
   const cart = {
     userId: '12345',
-    customerEmail: 'sebastian.wapinski@gmail.com',
     items: [{
       id: '-NjCGEf3bunbUFs16xXA',
       quantity: 3

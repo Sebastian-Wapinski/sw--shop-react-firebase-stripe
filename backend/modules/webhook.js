@@ -48,7 +48,7 @@ async function webhook(req, res) {
       createOrder(session)
       const email = session.customer_details.email
 
-      if (session.payment_method_options.customer_balance.funding_type === 'bank_transfer') {
+      if (session.payment_method_options.customer_balance && session.payment_method_options.customer_balance.funding_type === 'bank_transfer') {
         sendEmail(email, 'Payment Bank Transfer Method', `Please transfer the money to the following bank details: ${session.url}`)
       }
 
